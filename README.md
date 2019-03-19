@@ -1,2 +1,2 @@
-# -offer
-剑指offer的python代码实现和解释
+# -剑指offer
+Python 3.6
