@@ -1,0 +1,38 @@
+题目描述
+在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。
+请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+# Solution1
+class Solution1:
+    def Find1(self, target, array): 
+        def go(target, array, left, right, up, down):
+            if left > right or up > down:
+                return False
+            midcol = (left + right) // 2 
+            midrow = (up + down) // 2
+            if array[midrow][midcol] > target:
+                return go(target, array, left, right, up, midrow-1) or go(target, array, left, midcol-1, midrow, down)
+            elif array[midrow][midcol] == target:
+                return True
+            else:
+                return go(target, array, midcol+1, right, up, midrow) or go(target, array, left, right, midrow+1, down)
+        return go (target, array, 0, len(array[0])-1, 0, len(array)-1)
+# Solution2
+class Solution2:
+    def Find2(self,target, array):
+        col =len(array[0])-1
+        row = 0
+        while row < len(array) and  col >= 0:
+            if target < array[row][col]:
+                col -= 1
+            elif target > array[row][col]:
+                row += 1
+            else:
+                return True
+        return False
+# Test
+test1 = Solution1()
+test2 = Solution2()
+target = 7
+array = [[1,2,8,9],[2,4,9,12],[3,7,10,13],[6,8,11,15]]
+print(test1.Find(target, array))
+print(test2.Find(target, array))
